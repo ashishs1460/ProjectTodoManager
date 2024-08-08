@@ -1,12 +1,19 @@
 package com.ashish.todo.service.user;
 
+import com.ashish.todo.configuration.jwt.JwtService;
+import com.ashish.todo.dto.AuthenticationRequest;
+import com.ashish.todo.dto.AuthenticationResponse;
 import com.ashish.todo.exceptionHandling.UserAlreadyExistException;
 import com.ashish.todo.model.User;
 import com.ashish.todo.respository.UserRepository;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @Service
@@ -15,11 +22,17 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+    private JwtService jwtService;
     @Autowired
     public UserServiceImp(UserRepository userRepository,
-                            PasswordEncoder passwordEncoder){
+                            PasswordEncoder passwordEncoder,
+                            AuthenticationManager authenticationManager,
+                            JwtService jwtService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
 
@@ -39,5 +52,23 @@ public class UserServiceImp implements UserService {
             userRepository.save(newUser);
         }
 
+    }
+
+    @Override
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var claims = new HashMap<String,Object>();
+        var user = ((User) auth.getPrincipal());
+        claims.put("fullName",user.fullName());
+        var jwt = jwtService.generateToken(claims,user);
+        return AuthenticationResponse
+                .builder()
+                .token(jwt)
+                .build();
     }
 }

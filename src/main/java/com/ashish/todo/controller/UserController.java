@@ -1,11 +1,16 @@
 package com.ashish.todo.controller;
 
+import com.ashish.todo.dto.AuthenticationRequest;
+import com.ashish.todo.dto.AuthenticationResponse;
 import com.ashish.todo.model.User;
 import com.ashish.todo.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+
+
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
+
     }
 
     @GetMapping("/test")
@@ -33,5 +41,12 @@ public class UserController {
     public ResponseEntity<String> registerUser(@RequestBody User user){
         userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+    }
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody @Valid AuthenticationRequest request
+    ){
+
+        return ResponseEntity.ok(userService.authenticate(request));
     }
 }

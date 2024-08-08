@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -19,7 +20,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User implements UserDetails {
+public class User implements UserDetails , Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -66,5 +67,10 @@ public class User implements UserDetails {
 
     public String fullName(){
         return firstName+" "+lastName;
+    }
+
+    @Override
+    public String getName() {
+        return email;
     }
 }
