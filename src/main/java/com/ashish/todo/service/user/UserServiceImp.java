@@ -73,4 +73,9 @@ public class UserServiceImp implements UserService {
                 .user(user)
                 .build();
     }
+
+    @Override
+    public Optional<User> findById(Integer userId) {
+        return userRepository.findById(userId);
+    }
 }
