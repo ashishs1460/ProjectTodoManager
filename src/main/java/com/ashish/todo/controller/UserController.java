@@ -2,6 +2,7 @@ package com.ashish.todo.controller;
 
 import com.ashish.todo.dto.AuthenticationRequest;
 import com.ashish.todo.dto.AuthenticationResponse;
+import com.ashish.todo.dto.RegistrationRequest;
 import com.ashish.todo.model.User;
 import com.ashish.todo.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -37,11 +41,16 @@ public class UserController {
         return (CsrfToken) request.getAttribute("_csrf");
     }
 
+
+
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user){
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody @Valid RegistrationRequest user) {
         userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User registered successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest request

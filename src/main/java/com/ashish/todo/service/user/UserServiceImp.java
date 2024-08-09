@@ -3,6 +3,7 @@ package com.ashish.todo.service.user;
 import com.ashish.todo.configuration.jwt.JwtService;
 import com.ashish.todo.dto.AuthenticationRequest;
 import com.ashish.todo.dto.AuthenticationResponse;
+import com.ashish.todo.dto.RegistrationRequest;
 import com.ashish.todo.exceptionHandling.UserAlreadyExistException;
 import com.ashish.todo.model.User;
 import com.ashish.todo.respository.UserRepository;
@@ -37,7 +38,7 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public void registerUser(User user) {
+    public void registerUser(RegistrationRequest user) {
         String email = user.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isPresent()){
@@ -69,6 +70,7 @@ public class UserServiceImp implements UserService {
         return AuthenticationResponse
                 .builder()
                 .token(jwt)
+                .user(user)
                 .build();
     }
 }
