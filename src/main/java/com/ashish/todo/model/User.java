@@ -1,9 +1,7 @@
 package com.ashish.todo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @Getter
@@ -28,6 +27,9 @@ public class User implements UserDetails , Principal {
     private String lastName;
     private String email;
     private String password;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Project> projects;
 
 
     @Override
