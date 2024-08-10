@@ -161,5 +161,29 @@ public class ProjectServiceImp implements ProjectService{
         }
     }
 
+    @Override
+    public ResponseEntity<Project> updateTodoStatus(TodoStatusUpdateRequest request) {
+        Optional<Project> optionalProject = projectRepository.findById(request.getProjectId());
+        if(optionalProject.isPresent()){
+            Project project = optionalProject.get();
+            Optional<Todo> optionalTodo = project.getTodos().stream()
+                    .filter(todo->todo.getId() == request.getTodoId())
+                    .findFirst();
+            if(optionalTodo.isPresent()){
+                Todo todo = optionalTodo.get();
+                todo.setStatus(request.getStatus());
+                todo.setUpdatedDate(LocalDate.now());
+                todoRepository.save(todo);
+                projectRepository.save(project);
+                return ResponseEntity.ok(project);
+            }else {
+                return ResponseEntity.notFound().build();
+            }
+        }else{
+                return ResponseEntity.notFound().build();
+        }
+
+    }
+
 
 }

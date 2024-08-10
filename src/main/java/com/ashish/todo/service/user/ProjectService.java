@@ -16,4 +16,6 @@ public interface ProjectService {
     ResponseEntity<Project> deleteTodo(TodoDeletionRequest request);
 
     ResponseEntity<Project> updateTodo(TodoUpdateRequest request);
+
+    ResponseEntity<Project> updateTodoStatus(TodoStatusUpdateRequest request);
 }

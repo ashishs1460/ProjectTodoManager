@@ -48,4 +48,9 @@ public class ProjectController {
         return projectService.updateTodo(request);
     }
 
+    @PostMapping("/updateTodoStatus")
+    public ResponseEntity<Project> updateTodoStatus(@RequestBody TodoStatusUpdateRequest request){
+        return projectService.updateTodoStatus(request);
+    }
+
 }
