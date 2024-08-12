@@ -1,12 +1,12 @@
 package com.ashish.todo.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TodoDeletionRequest {
     private int projectId;
     private int todoId;
