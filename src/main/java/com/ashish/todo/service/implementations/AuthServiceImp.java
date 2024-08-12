@@ -1,4 +1,4 @@
-package com.ashish.todo.service.user;
+package com.ashish.todo.service.implementations;
 
 import com.ashish.todo.configuration.jwt.JwtService;
 import com.ashish.todo.dto.AuthenticationRequest;
@@ -7,8 +7,7 @@ import com.ashish.todo.dto.RegistrationRequest;
 import com.ashish.todo.exceptionHandling.UserAlreadyExistException;
 import com.ashish.todo.model.User;
 import com.ashish.todo.respository.UserRepository;
-import io.jsonwebtoken.Jwt;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ashish.todo.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,24 +17,21 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Service
-public class UserServiceImp implements UserService {
-
+public class AuthServiceImp implements AuthService {
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private JwtService jwtService;
-    @Autowired
-    public UserServiceImp(UserRepository userRepository,
-                            PasswordEncoder passwordEncoder,
+    public AuthServiceImp(UserRepository userRepository,
                             AuthenticationManager authenticationManager,
+                            PasswordEncoder passwordEncoder,
                             JwtService jwtService){
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
-
 
     @Override
     public void registerUser(RegistrationRequest user) {
@@ -74,8 +70,4 @@ public class UserServiceImp implements UserService {
                 .build();
     }
 
-    @Override
-    public Optional<User> findById(Integer userId) {
-        return userRepository.findById(userId);
-    }
 }

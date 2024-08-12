@@ -1,4 +1,4 @@
-package com.ashish.todo.service.user;
+package com.ashish.todo.service.implementations;
 
 import com.ashish.todo.dto.*;
 import com.ashish.todo.model.Project;
@@ -7,6 +7,7 @@ import com.ashish.todo.model.User;
 import com.ashish.todo.respository.ProjectRepository;
 import com.ashish.todo.respository.TodoRepository;
 import com.ashish.todo.respository.UserRepository;
+import com.ashish.todo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectServiceImp implements ProjectService{
+public class ProjectServiceImp implements ProjectService {
 
     private ProjectRepository projectRepository;
     private TodoRepository todoRepository;

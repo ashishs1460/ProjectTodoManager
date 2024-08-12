@@ -1,7 +1,7 @@
 package com.ashish.todo.configuration;
 
 import com.ashish.todo.configuration.jwt.JwtFilter;
-import com.ashish.todo.service.user.UserDetailServiceImp;
+import com.ashish.todo.service.implementations.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

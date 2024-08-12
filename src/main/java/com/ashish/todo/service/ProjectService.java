@@ -1,4 +1,4 @@
-package com.ashish.todo.service.user;
+package com.ashish.todo.service;
 
 import com.ashish.todo.dto.*;
 import com.ashish.todo.model.Project;

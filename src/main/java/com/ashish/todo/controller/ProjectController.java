@@ -2,7 +2,7 @@ package com.ashish.todo.controller;
 
 import com.ashish.todo.dto.*;
 import com.ashish.todo.model.Project;
-import com.ashish.todo.service.user.ProjectService;
+import com.ashish.todo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

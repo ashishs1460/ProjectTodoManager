@@ -1,4 +1,4 @@
-package com.ashish.todo.service.user;
+package com.ashish.todo.service.implementations;
 
 import com.ashish.todo.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,6 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
-                .orElseThrow(()->new UsernameNotFoundException("UserService not found!"));
+                .orElseThrow(()->new UsernameNotFoundException("User not found!"));
     }
 }

@@ -1,7 +1,7 @@
 package com.ashish.todo.controller;
 
 import com.ashish.todo.model.User;
-import com.ashish.todo.service.user.UserService;
+import com.ashish.todo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
